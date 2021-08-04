@@ -11,11 +11,23 @@ import ModalFooter from "@material-tailwind/react/ModalFooter";
 import { useState } from "react";
 import { db } from "../firebase";
 import firebase from "firebase";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
+import DocumentRow from "../components/DocumentRow";
 
 export default function Home() {
   const [session] = useSession();
+
+  if (!session) return <Login />;
+
   const [showModal, setShowModal] = useState(false);
   const [input, setInput] = useState("");
+  const [snapshot] = useCollectionOnce(
+    db
+      .collection("userDocs")
+      .doc(session.user.email)
+      .collection("docs")
+      .orderBy("timestamp", "docs")
+  );
 
   const createDocument = () => {
     if (!input) return;
@@ -28,8 +40,6 @@ export default function Home() {
     setInput("");
     setShowModal(false);
   };
-
-  if (!session) return <Login />;
 
   const modal = (
     <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
@@ -102,6 +112,15 @@ export default function Home() {
             <p className="mr-12">Date Created</p>
             <Icon name="folder" size="3x1" color="gray"></Icon>
           </div>
+
+          {snapshot?.docs.map((doc) => (
+            <DocumentRow
+              key={doc.id}
+              id={doc.id}
+              fileName={doc.data().fileName}
+              date={doc.data().timestamp}
+            />
+          ))}
         </div>
       </section>
     </div>
