@@ -2,7 +2,7 @@ import Button from "@material-tailwind/react/Button";
 import Icon from "@material-tailwind/react/Icon";
 function Header() {
   return (
-    <div className="flex items-center px-4 py-2 shadow-md bg-white">
+    <header className="flex items-center px-4 py-2 shadow-md bg-white">
       <Button
         color="gray"
         buttonType="outline"
@@ -36,18 +36,18 @@ function Header() {
         rounded={true}
         iconOnly={true}
         ripple="dark"
-        className="ml-5 md:ml-20 h-20 w-20 border-0"
+        className=" ml-5 md:ml-20 h-20 w-20 border-0"
       >
         <Icon name="apps" size="3x1" />
       </Button>
 
       <img
         loading="lazy"
-        className="cursor-pointer h-12 v-12 rounded-full ml-2"
+        className="cursor-pointer h-12 w-12 rounded-full ml-2"
         src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
         alt=""
       />
-    </div>
+    </header>
   );
 }
 
